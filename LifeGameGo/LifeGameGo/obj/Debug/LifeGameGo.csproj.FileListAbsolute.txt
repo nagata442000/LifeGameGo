@@ -1,1 +1,9 @@
 D:\LifeGameGo\LifeGameGo\LifeGameGo\LifeGameGo\bin\Debug\LifeGameGo.exe.config
+C:\Users\TAKUYA\Documents\GitHub\LifeGameGo\LifeGameGo\LifeGameGo\bin\Debug\LifeGameGo.exe.config
+C:\Users\TAKUYA\Documents\GitHub\LifeGameGo\LifeGameGo\LifeGameGo\bin\Debug\LifeGameGo.exe
+C:\Users\TAKUYA\Documents\GitHub\LifeGameGo\LifeGameGo\LifeGameGo\bin\Debug\LifeGameGo.pdb
+C:\Users\TAKUYA\Documents\GitHub\LifeGameGo\LifeGameGo\LifeGameGo\obj\Debug\LifeGameGo.csprojResolveAssemblyReference.cache
+C:\Users\TAKUYA\Documents\GitHub\LifeGameGo\LifeGameGo\LifeGameGo\obj\Debug\LifeGameGo.Properties.Resources.resources
+C:\Users\TAKUYA\Documents\GitHub\LifeGameGo\LifeGameGo\LifeGameGo\obj\Debug\LifeGameGo.csproj.GenerateResource.Cache
+C:\Users\TAKUYA\Documents\GitHub\LifeGameGo\LifeGameGo\LifeGameGo\obj\Debug\LifeGameGo.exe
+C:\Users\TAKUYA\Documents\GitHub\LifeGameGo\LifeGameGo\LifeGameGo\obj\Debug\LifeGameGo.pdb
