@@ -15,6 +15,7 @@ namespace LifeGameGo
         String black;
         String white;
         AI ai;
+        AI ai2;
         bool on_game;
         bool ai_vs_human;
         public Square[,] square;
@@ -26,7 +27,6 @@ namespace LifeGameGo
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            ai = new RandomAI();
             on_game = false;
             ai_vs_human = false;
             Init.init();
@@ -149,22 +149,81 @@ namespace LifeGameGo
         {
             black = listBox1.SelectedItem.ToString();
             white = listBox2.SelectedItem.ToString();
-            if(black == "AI" && white == "AI" )
+            board = new Board();
+
+            if (black != "Human" && white != "Human")
             {
-                MessageBox.Show("AI vs AI can't selected.");
+                if (black == "RandomAI")
+                {
+                    ai = new RandomAI();
+                }
+                else if (black == "MonteCarloAI")
+                {
+                    ai = new MCTAI();
+                }
+
+                if (white == "RandomAI")
+                {
+                    ai2 = new RandomAI();
+                }
+                else if (white == "MonteCarloAI")
+                {
+                    ai2 = new MCTAI();
+                }
+
+                Info.GameState st;
+                while (true)
+                {
+                    st = board.play(ai.play(board));
+                    Refresh();
+                    if (st == Info.GameState.END_GAME)
+                    {
+                        break;
+                    }
+                    st = board.play(ai2.play(board));
+                    Refresh();
+                    if (st == Info.GameState.END_GAME)
+                    {
+                        break;
+                    }
+                }
+                double black_point = board.stones[0].size();
+                double white_point = board.stones[1].size() + 6.5;
+                String msg = "Black " + black_point + " White " + white_point;
+                MessageBox.Show(msg);
+
                 return;
             }
-            board = new Board();
-            if (black == "AI")
+
+            if (black == "RandomAI")
+            {
+                ai = new RandomAI();
+            }
+            else if (black == "MonteCarloAI")
+            {
+                ai = new MCTAI();
+            }
+
+            if (white == "RandomAI")
+            {
+                ai = new RandomAI();
+            }
+            else if (white == "MonteCarloAI")
+            {
+                ai = new MCTAI();
+            }
+
+
+            if (black != "Human")
             {
                 ai_vs_human = true;
                 board.play(ai.play(board));
-                Refresh();
             }
-            if (white == "AI")
+            if (white != "Human")
             {
                 ai_vs_human = true;
             }
+            Refresh();
             on_game = true;
         }
 
@@ -180,7 +239,7 @@ namespace LifeGameGo
             {
                 double black_point = board.stones[0].size();
                 double white_point = board.stones[1].size() + 6.5;
-                String msg = "Black " + black_point + "White " + white_point;
+                String msg = "Black " + black_point + " White " + white_point;
                 MessageBox.Show(msg);
                 on_game = false;
                 return;
@@ -194,11 +253,44 @@ namespace LifeGameGo
                 {
                     double black_point = board.stones[0].size();
                     double white_point = board.stones[1].size() + 6.5;
-                    String msg = "Black " + black_point + "White " + white_point;
+                    String msg = "Black " + black_point + " White " + white_point;
                     MessageBox.Show(msg);
                     on_game = false;
                 }
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if(!on_game)
+            {
+                return;
+            }
+            if(board.points.Count==0)
+            {
+                return;
+            }
+            Board n = new Board();
+            if (ai_vs_human)
+            {
+                if(board.points.Count==1)
+                {
+                    return;
+                }
+                for(int i=0;i<board.points.Count-2;++i)
+                {
+                    n.play(board.points[i]);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < board.points.Count - 1; ++i)
+                {
+                    n.play(board.points[i]);
+                }
+            }
+            board = n;
+            Refresh();
         }
     }
 }
