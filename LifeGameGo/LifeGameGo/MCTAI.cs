@@ -61,13 +61,40 @@ namespace LifeGameGo
 
         public List<Point> nextMove(Board board)
         {
-            PlayResult p = new PlayResult(board);
-            return p.valid.toList();
+            return nextMovePlayOut(board);
         }
 
         public List<Point> nextMovePlayOut(Board board)
         {
             PlayResult p = new PlayResult(board);
+            Attack a = new Attack(board);
+
+            int t = board.turn;
+            PointSet ps;
+            for(int i=2;i>0;--i)
+            { 
+                ps = board.stones[1 - t] & a.attack[t, i];
+                if (ps.size() != 0)
+                {
+                    List<Point> l = ps.toList();
+                    PointSet res = new PointSet();
+                    foreach (Point n in l)
+                    {
+                        res = res | PointSet.around[n.x, n.y];
+                    }
+                    res = res & p.valid;
+                    if (res.size() != 0)
+                    {
+                        return res.toList();
+                    }
+                }
+            }
+            ps = a.attack[0, 0] & a.attack[1, 0];
+            ps = ps & p.valid;
+            if (ps.size() != 0)
+            {
+                return ps.toList();
+            }
             return p.valid.toList();
         }
 

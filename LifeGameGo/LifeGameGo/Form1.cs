@@ -31,8 +31,8 @@ namespace LifeGameGo
             ai_vs_human = false;
             Init.init();
             board = new Board();
-            listBox1.SelectedIndex = 0;
-            listBox2.SelectedIndex = 0;
+            comboBox1.SelectedIndex = 0;
+            comboBox2.SelectedIndex = 0;
             square = new Square[Info.N, Info.N];
             for(int x=0;x<Info.N;++x)
             {
@@ -55,6 +55,7 @@ namespace LifeGameGo
             }
             Square s = (Square)sender;
             Info.GameState r = board.play(new Point(s.x, s.y));
+            Refresh();
             if (r == Info.GameState.VALID_MOVE && ai_vs_human)
             {
                 board.play(ai.play(board));
@@ -147,8 +148,8 @@ namespace LifeGameGo
 
         private void button1_Click(object sender, EventArgs e)
         {
-            black = listBox1.SelectedItem.ToString();
-            white = listBox2.SelectedItem.ToString();
+            black = comboBox1.Text;
+            white = comboBox2.Text;
             board = new Board();
 
             if (black != "Human" && white != "Human")
@@ -291,6 +292,26 @@ namespace LifeGameGo
             }
             board = n;
             Refresh();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if(!on_game)
+            {
+                return;
+            }
+            Info.GameState st = Info.GameState.VALID_MOVE;
+            AI randomai = new RandomAI();
+            while(st != Info.GameState.END_GAME)
+            {
+                st = board.play(randomai.play(board));
+                Refresh();
+            }
+            double black_point = board.stones[0].size();
+            double white_point = board.stones[1].size() + 6.5;
+            String msg = "Black " + black_point + " White " + white_point;
+            MessageBox.Show(msg);
+            on_game = false;
         }
     }
 }
